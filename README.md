@@ -31,10 +31,10 @@ Used uploaded `yaml`file `configtx.yaml` for policy test.
         *Note that **policies higher in the hierarchy are all defined as ImplicitMetaPolicys** while leaf nodes necessarily are defined as SignaturePolicys. This set of defaults works nicely because the ImplicitMetaPolicies do not need to be redefined as the number of organizations change, and the individual organizations may pick their own rules and thresholds for what is means to be a Reader, Writer, and Admin.*
 
     6) Endorsement policies at chaincode-level
-        Endorsement policies는 `chaincode-level`과 `key-level` 각각의 hi 설정할 수 있으며, 체인코드 `instantiation`와 `upgrade`를 할 때 `endorsement policy`를 설정할 수 있다.
-        ex) 
-        `peer chaincode instantiate -C <channelid> -n mycc -P "AND('Org1.peer', 'Org2.peer')"`
-        **Endorsement policy syntex**
+        Endorsement policies는 `chaincode-level`과 `key-level` 각각의 hi 설정할 수 있으며, 체인코드 `instantiation`와 `upgrade`를 할 때 `endorsement policy`를 설정할 수 있다.<br>
+        ex)<br>
+        `peer chaincode instantiate -C <channelid> -n mycc -P "AND('Org1.peer', 'Org2.peer')"`<br>
+        **Endorsement policy syntex**<br>
         <ul>`'Org0.admin'`: any administrator of the `Org0` MSP</ul>
         <ul>`'Org1.member'`: any member of the `Org1` MSP</ul>
         <ul>`'Org1.client'`: any client of the `Org1` MSP</ul>
