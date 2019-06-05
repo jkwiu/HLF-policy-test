@@ -35,16 +35,16 @@ Used uploaded `yaml`file `configtx.yaml` for policy test.
         ex)<br>
         `peer chaincode instantiate -C <channelid> -n mycc -P "AND('Org1.peer', 'Org2.peer')"`<br>
         **Endorsement policy syntex**<br>
-        <ul>`'Org0.admin'`: any administrator of the `Org0` MSP</ul>
-        <ul>`'Org1.member'`: any member of the `Org1` MSP</ul>
-        <ul>`'Org1.client'`: any client of the `Org1` MSP</ul>
-        <ul>`'Org1.peer'`: any peer of the `Org1` MSP</ul>
+        - `'Org0.admin'`: any administrator of the `Org0` MSP
+        - `'Org1.member'`: any member of the `Org1` MSP
+        - `'Org1.client'`: any client of the `Org1` MSP
+        - `'Org1.peer'`: any peer of the `Org1` MSP
         **For example:**
-        <ul>`AND('Org1.member', 'Org2.member', 'Org3.member')`</ul>
-        <ul>`OR('Org1.member', 'Org2.member')`</ul>
-        <ul>`OR('Org1.member', AND('Org2.member', 'Org3.member'))`</ul>
-        <ul>`OutOf(1, 'Org1.member', 'Org2.member')` is equivalent to `OR('Org1.member', 'Org2.member')`.</ul>
-        <ul>`OutOf(2, 'Org1.member', 'Org2.member')` is equivalent to `AND('Org1.member', 'Org2.member')`</ul>
+        - `AND('Org1.member', 'Org2.member', 'Org3.member')`
+        - `OR('Org1.member', 'Org2.member')`
+        - `OR('Org1.member', AND('Org2.member', 'Org3.member'))`
+        - `OutOf(1, 'Org1.member', 'Org2.member')` is equivalent to `OR('Org1.member', 'Org2.member')`.
+        - `OutOf(2, 'Org1.member', 'Org2.member')` is equivalent to `AND('Org1.member', 'Org2.member')`
         `key-level`에서의 endorsement policy가 수정되거나 없으면, `chaincode-level`에서 default값으로 setting된다.
         새로운 `key-level` endorsement policies를 설정하기 위해서는 기존의 policy를 따라야 한다. `key-level endorsement policies`가 `chaincode-level endorsement policies`보다 더 우선된다.
 
