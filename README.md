@@ -5,17 +5,17 @@ This is testcase about hyperledger fabric for policies of each layer(Channel, Ap
 Used uploaded `yaml`file `configtx.yaml` for policy test.
 
 - Hyperledger doc
-    1) Waht is Policy? 
-        Hyperledger Fabric blockchain network is managed **by policies** and policies **reside in the channel configuration**.
-        However, policies may also be specified in some other places, such as **chaincodes**.
+    1) Waht is Policy?<br>
+        Hyperledger Fabric blockchain network is managed **by policies** and policies **reside in the channel configuration**.<br>
+        However, policies may also be specified in some other places, such as **chaincodes**.<br>
         If signer or signers of some dats meet some condition required for policies, returned `valid`, otherwise returned `invalid`.
 
     2) Policy Types
     Policies are encoded in a `common.Policy` message as defined in `fabric/protos/common/policies.proto`. 
-        2-1) **SignaturePolicy**
-            This policy type is the most powerful. (`AND``OR``NOutOf`)
-        2-2) **ImplicitMetaPolicy**
-            This policy type is less flexible than SignaturePolicy, and is **only valid in the context of configuration**.
+        2-1) **SignaturePolicy**<br>
+            This policy type is the most powerful. (`AND``OR``NOutOf`)<br>
+        2-2) **ImplicitMetaPolicy**<br>
+            This policy type is less flexible than SignaturePolicy, and is **only valid in the context of configuration**.<br>
             It aggregates the result of evaluating policies deeper in the configuration hierarchy, which are **ultimately defined by SignaturePolicies**. It **supports good default rules** like “A majority of the organization admin policies”.
     
     3) Configuration and Policies
@@ -100,7 +100,8 @@ Organizations:
                 Type: Signature
                 Rule: "OR('PeerOrg2MSP.admin')"
 
-//Application layer에서 block에 encoding되는 config transaction이나 genesis.block에 관련된 value에 대한 정의를 할 수 있는 section
+//Application layer에서 block에 encoding되는 config transaction이나 
+//genesis.block에 관련된 value에 대한 정의를 할 수 있는 section
 Application: &ApplicationDefaults
     Organizations:
         //canonical path: /Channel/Application/<PolicyName>
@@ -119,7 +120,9 @@ Orderer: &OrdererDefaults
     Organizations:
     //canonical path: /Channel/Orderer/<PolicyName>
         Policies:
-        //ImplicitMeta는 초기에 configtx.yaml으로 setting하는 것으로 나중에는 변경이 불가하며, 새로운 Policy를 생성할 때도 이 규칙을 따른다(확실치 않음, 더 알아봐야 함)
+        //ImplicitMeta는 초기에 configtx.yaml으로 setting하는 것으로 나중에는
+        //변경이 불가하며, 새로운 Policy를 생성할 때도 이 규칙을 따른다.
+        //(확실치 않음, 더 알아봐야 함)
         Readers:
             Type: ImplicitMeta
             Rule: "ANY Readers"
