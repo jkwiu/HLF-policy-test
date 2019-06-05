@@ -48,16 +48,124 @@ Used uploaded `yaml`file `configtx.yaml` for policy test.
         `key-level`에서의 endorsement policy가 수정되거나 없으면, `chaincode-level`에서 default값으로 setting된다.
         새로운 `key-level` endorsement policies를 설정하기 위해서는 기존의 policy를 따라야 한다. `key-level endorsement policies`가 `chaincode-level endorsement policies`보다 더 우선된다.
 
-    7) **ACL(Access Control Lists)**
+    # **ACL(Access Control Lists)**
         ex) Two sample excerpts
-        # ACL policy for invoking chaincodes on peer
+        //ACL policy for invoking chaincodes on peer
         `peer/Propose:` `/Channel/Application/Writers`
-        # ACL policy for sending block events
+        //ACL policy for sending block events
         `event/Block:` `/Channel/Application/Readers`
         채널이 이미 구성되어 있는 상태에서 새로운 `policy`를 적용하고 싶다면 `update transactions`를 통해 할 수 있다.
 
-
     (**Ref.**: https://hyperledger-fabric.readthedocs.io/en/release-1.4/policies.html)
-    
+
+#`configtx.yaml` Policies 분석
+```Organizations
+Organizations:
+    -&OrdererOrg
+        //block에 접근하기 위해서는 이 Policies의 Readers를 만족하여야 한다
+        //canonical path: /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+        Policies:
+            Readers:
+                //서명방식
+                Type: Signature
+                Rule: "OR('OrdererMSP.member', 'PeerOrg1MSP.member', 'PeerOrg2MSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member', 'PeerOrg1MSP.member', 'PeerOrg2MSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP.admin')"
+    - &Org1
+        //canonical path: /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('PeerOrg1MSP.admin', 'PeerOrg1MSP.peer', 'PeerOrg1MSP.client', 'PeerOrg2MSP.peer')"
+            Writers:
+                Type: Signature
+                Rule: "OR('PeerOrg1MSP.admin', 'PeerOrg1MSP.client', 'PeerOrg1MSP.peer')"
+            Admins:
+                Type: Signature
+                Rule: "OR('PeerOrg1MSP.admin')"
+    - &Org2
+        //canonical path: /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('PeerOrg2MSP.admin', 'PeerOrg2MSP.peer', 'PeerOrg2MSP.client', 'PeerOrg1MSP.peer')"
+            Writers:
+                Type: Signature
+                Rule: "OR('PeerOrg2MSP.admin', 'PeerOrg2MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('PeerOrg2MSP.admin')"
+
+//Application layer에서 block에 encoding되는 config transaction이나 genesis.block에 관련된 value에 대한 정의를 할 수 있는 section
+Application: &ApplicationDefaults
+    Organizations:
+        //canonical path: /Channel/Application/<PolicyName>
+        Policies:
+            Readers:
+                Type: ImplicitMeta
+                Rule: "ANY Readers"
+            Writers:
+                Type: ImplicitMeta
+                Rule: "ANY Writers"
+            Admins:
+                Type: ImplicitMeta
+                Rule: "MAJORITY Admins"
+
+Orderer: &OrdererDefaults
+    Organizations:
+    //canonical path: /Channel/Orderer/<PolicyName>
+        Policies:
+        //ImplicitMeta는 초기에 configtx.yaml으로 setting하는 것으로 나중에는 변경이 불가하며, 새로운 Policy를 생성할 때도 이 규칙을 따른다(확실치 않음, 더 알아봐야 함)
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        // BlockValidation specifies what signatures must be included in the block from the orderer for the peer to validate it.
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+
+Channel: &ChannelDefaults
+    //canonical path: /Channel/<PolicyName>
+    Policies:
+        // Who may invoke the 'Deliver' API
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        // Who may invoke the 'Broadcast' API
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        // By default, who may modify elements at this config level
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+
+Channel: &ChannelTestnet
+    //canonical path: /Channel/<PolicyName>
+    Policies:
+        // Who may invoke the 'Deliver' API
+        Readers:
+            Type: Signature
+            Rule: "OR('PeerOrg1MSP.admin', 'PeerOrg1MSP.peer', 'PeerOrg1MSP.client', 'PeerOrg2MSP.peer')"
+        // Who may invoke the 'Broadcast' API
+        Writers:
+            Type: Signature
+            Rule: "OR('OrdererMSP.member', 'PeerOrg1MSP.member', 'PeerOrg1MSP.member')"
+        // By default, who may modify elements at this config level
+        Admins:
+            Type: Signature
+            Rule: "OR('PeerOrg1MSP.admin')"
+```
+
 1. Testcase
 |---|---
