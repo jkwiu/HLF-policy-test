@@ -10,8 +10,8 @@ Used uploaded `yaml`file `configtx.yaml` for policy test.
         However, policies may also be specified in some other places, such as **chaincodes**.<br>
         If signer or signers of some dats meet some condition required for policies, returned `valid`, otherwise returned `invalid`.<br>
         **ref**
-         <li>admin cert: chaincode install/instantiate, creating channel 등에 사용</li><br>
-         <li>signcerts: endorsing을 위한 cert
+         <ol>admin cert: chaincode install/instantiate, creating channel 등에 사용</ol><br>
+         <ol>signcerts: endorsing을 위한 cert</ol><br>
 
     **2) Policy Types**<br>
     Policies are encoded in a `common.Policy` message as defined in `fabric/protos/common/policies.proto`. 
@@ -73,16 +73,16 @@ Used uploaded `yaml`file `configtx.yaml` for policy test.
         ex)<br>
         `peer chaincode instantiate -C <channelid> -n mycc -P "AND('Org1.peer', 'Org2.peer')"`<br>
         **Endorsement policy syntex**<br>
-        - `'Org0.admin'`: any administrator of the `Org0` MSP
-        - `'Org1.member'`: any member of the `Org1` MSP
-        - `'Org1.client'`: any client of the `Org1` MSP
-        - `'Org1.peer'`: any peer of the `Org1` MSP
-        **For example:**
-        - `AND('Org1.member', 'Org2.member', 'Org3.member')`
-        - `OR('Org1.member', 'Org2.member')`
-        - `OR('Org1.member', AND('Org2.member', 'Org3.member'))`
-        - `OutOf(1, 'Org1.member', 'Org2.member')` is equivalent to `OR('Org1.member', 'Org2.member')`.
-        - `OutOf(2, 'Org1.member', 'Org2.member')` is equivalent to `AND('Org1.member', 'Org2.member')`
+        - `'Org0.admin'`: any administrator of the `Org0` MSP<br>
+        - `'Org1.member'`: any member of the `Org1` MSP<br>
+        - `'Org1.client'`: any client of the `Org1` MSP<br>
+        - `'Org1.peer'`: any peer of the `Org1` MSP<br>
+        **For example:**<br>
+        - `AND('Org1.member', 'Org2.member', 'Org3.member')`<br>
+        - `OR('Org1.member', 'Org2.member')`<br>
+        - `OR('Org1.member', AND('Org2.member', 'Org3.member'))`<br>
+        - `OutOf(1, 'Org1.member', 'Org2.member')` is equivalent to `OR('Org1.member', 'Org2.member')`.<br>
+        - `OutOf(2, 'Org1.member', 'Org2.member')` is equivalent to `AND('Org1.member', 'Org2.member')`<br>
         
 # ACL(Access Control Lists)<br>
    **ex)Two sample excerpts**<br>
