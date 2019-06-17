@@ -4,7 +4,7 @@ Hyperledger Fabric policy test
 This is testcase about hyperledger fabric for policies of each layer(Channel, Application, Orderer.. etc)
 Used uploaded `yaml`file `configtx.yaml` for policy test.
 
-- Hyperledger doc
+- Hyperledger doc<br>
     **1) Waht is Policy?**<br>
         Hyperledger Fabric blockchain network is managed **by policies** and policies **reside in the channel configuration**.<br>
         However, policies may also be specified in some other places, such as **chaincodes**.<br>
@@ -23,7 +23,7 @@ Used uploaded `yaml`file `configtx.yaml` for policy test.
      user는 DApp을 통해 peer 네트워크에 설치된 체인코드(Read/Write)를 실행할 수 있다. user는 자신의 인증서를 이용해서 peer와 연결 후 체인코드 query실행, peer의 로컬 저장소의 ledger data를 return. invoke의 경우에는 요청받은 peer가 트랜잭션과 보증정책을 확인하고 올바르면 결과값과 peer의 디지털 인증서를 DApp에 전달. DApp은 다시 peer의 디지털 인증서와 함께 트랜잭션을 orderer로 전송, orderer는 최신 블록을 생성하고 자신이 속한 네트워크의 모든 peer에게 전달. 전달받은 peer들은 해당 블록을 검증하고 올바르면 자신의 분산원장을 업데이트, 끝으로 DApp에 결과 전달.<br><br>
 
     **2) Policy Types**<br>
-    Policies are encoded in a `common.Policy` message as defined in `fabric/protos/common/policies.proto`. 
+    Policies are encoded in a `common.Policy` message as defined in `fabric/protos/common/policies.proto`. <br>
         **2-1) SignaturePolicy**<br>
             This policy type is the most powerful. (`AND``OR``NOutOf`)<br>
         **2-2) ImplicitMetaPolicy**<br>
