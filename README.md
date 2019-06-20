@@ -137,7 +137,7 @@ Used uploaded `yaml`file `configtx.yaml` for policy test.
 ```
 
 
-#`configtx.yaml` Policies excerpts
+#`configtx.yaml` Policies excerpts<configtx.yaml을 통해 전체적으로 간략히 각 hierarchy의 policy를 보자><br>
 ```Organizations
 Organizations:
     -&OrdererOrg
@@ -252,11 +252,12 @@ Channel: &ChannelTestnet
  - `MSP`와 `ROLE`(`member`,`admin`,`client`,`peer`) 두개가 필요.<br>
  - syntax: `EXPR(E[, E...])`<br>
  - policy는 instantiate 후에 적용된다.<br>
-    ```peer chaincode instantiate example
+```peer chaincode instantiate example
     peer chaincode instantiate -C <channelid> -n mycc -P "AND('Org1.member', 'Org2.member')"
     //peer에게만 보증을 제한할 수도 있다.
     peer chaincode instantiate -C <channelid> -n mycc -P "AND('Org1.peer', 'Org2.peer')"
-    ```
+```
+ - instantiate 후에는 격리된 chaincode container가 생성되며, 이는 peer간의 transaction 시에 충돌을 막기 위해 격리한 것이다. invoke시 값이 유효한지 식이 유효한지를 시뮬레이션 한 뒤에 invoke transaction이 진행 되는 것이다.(좀 더 알아봐야 함.. 하다맘..)
 # Fabric validation rules<br>
  - UTXO: 이중지불인지?<br>
  - Anonymous transactions: peer의 identity가 유효한지?<br> 
