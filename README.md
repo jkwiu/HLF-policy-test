@@ -65,8 +65,8 @@ Used uploaded `yaml`file `configtx.yaml` for policy test.
                         Readers
                         Writers
                         Admins
-        ```
-        To call `Deliver` on the orderer, the signature on the request must satisfy the `/Channel/Readers` policy. However, to gossip a block to a peer will require that the `/Channel/Application/Readers` policy be satisfied.<br>
+        ```<br>
+        *To call `Deliver` on the orderer, the signature on the request must satisfy the `/Channel/Readers` policy. However, to gossip a block to a peer will require that the `/Channel/Application/Readers` policy be satisfied.*<br>
         *Deliver: `channel level`에서 사용됨. 엑세스 제어, 이전에 커밋된 블록에 대한 정보 요청. `commited`된 모든 블록을 원장에게 보냄. `chaincode`에 의해 설정된 `event`가 있으면 블록의 `ChaincodeActionPayload`에서 찾을 수 있다.<br><br>
     **4) Constructing a SignaturePolicy**<br>
         When evaluating a signature policy against a signature set, signatures are ‘consumed’, in the order in which they appear, regardless of whether they satisfy multiple policy principals.        
